@@ -1,0 +1,32 @@
+package strings;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubsequencesUsingRecurssion {
+	
+	public static void printF(int index,int n ,List<Integer> list ,int arr[]){
+		  
+		  if(index==arr.length){
+		    System.out.println(list);
+		    return;
+		  }
+		  
+		  list.add(arr[index]);
+		  printF(index+1,n,list,arr);
+
+		list.remove(arr[index]);
+		  printF(index+1,n,list,arr);    
+		  }
+		  
+		  
+		    public static void main(String[] args) {
+		      int arr[]= {3,1,2};
+		      int n = 3;
+		      List<Integer> list = new ArrayList()<>();
+		      
+		      printF(0,n,list,arr);
+		      
+		  }
+
+}
