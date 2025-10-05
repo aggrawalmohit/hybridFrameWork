@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    
+    <!-- Properties -->
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_PATH">test-output/logs/app.log</Property>
+    </Properties>
+
+    <!-- Appenders -->
+    <Appenders>
+        <!-- Console logging -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- Rolling File logging inside test-output -->
+        <RollingFile name="FileLogger"
+                     fileName="${LOG_PATH}"
+                     filePattern="test-output/logs/archive/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+    <!-- Loggers -->
+    <Loggers>
+        <!-- Project package logs -->
+        <Logger name="com.myproject" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLogger"/>
+        </Logger>
+
+        <!-- Root logger -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLogger"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
